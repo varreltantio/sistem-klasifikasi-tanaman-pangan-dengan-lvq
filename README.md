@@ -1,4 +1,6 @@
-# sistem-klasifikasi-tanaman-pangan-dengan-lvq
+# sistem klasifikasi tanaman pangan dengan lvq
+
+Saran Tani dikembangkan untuk membantu Anda mengoptimalkan sumberdaya lahan yang Anda miliki untuk memberikan hasil yang maksimal pada pertanian Anda
 
 ## Installation
 
