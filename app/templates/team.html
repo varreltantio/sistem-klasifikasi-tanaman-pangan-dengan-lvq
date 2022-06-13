@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% set active_page = "team" %}
+
+{% block head %}
+  <title>Team Kami</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {% include 'include/navbar.html' %}
+</div>
+
+<div id="team">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center">
+        <h3>Team Kami</h3>
+      </div>
+      <div class="col-md-12">
+        <div class="row text-center">
+          <div class="col-md-4">   
+            <img src="{{ url_for('static', filename='img/team1.png') }}" alt="team" class="img-fluid">
+            <h5 class="mt-3">Hipster</h5>
+            <p class="text-desc">Nur Muhammad Himawan</p>
+          </div>
+          <div class="col-md-4">   
+            <img src="{{ url_for('static', filename='img/team2.png') }}" alt="team" class="img-fluid">
+            <h5 class="mt-3">Hustler</h5>
+            <p class="text-desc">Aditya Hari Saputra</p>
+          </div>
+          <div class="col-md-4">   
+            <img src="{{ url_for('static', filename='img/team3.png') }}" alt="team" class="img-fluid">
+            <h5 class="mt-3">Hacker</h5>
+            <p class="text-desc">Varrel Dwitantio Purwadiansyah</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="benefits">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="{{ url_for('static', filename='img/benefit.png') }}" alt="benefit" class="img-fluid">
+      </div>
+      <div class="col-md-6 mt-5 info">
+        <h5>SAVE MORE TIME</h5>
+        <h3>And Boost Productivity</h3>
+        <p>Tunggu apalagi?
+          Segera temukan tanaman terbaik untuk pertanian Anda</p>
+        <a href="{{ url_for('rekomendasi') }}" class="btn btn-primary">Coba Sekarang</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'include/footer.html' %}
+{% endblock %}

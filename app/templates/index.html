@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% set active_page = "home" %}
+
+{% block head %}
+  <title>Sistem Klasifikasi Tanaman Pangan</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {% include 'include/navbar.html' %}
+
+  <div class="row" id="jumbotron">
+    <div class="col-lg-5">
+      <h1>Pertanian Presisi
+        Solusi Terkini untuk
+        Pertanian Masa Kini</h1>
+      <p>Saran Tani dikembangkan untuk membantu Anda 
+        mengoptimalkan sumberdaya lahan yang Anda miliki untuk
+        memberikan hasil yang maksimal pada pertanian Anda
+      </p>
+      <a href="{{ url_for('rekomendasi') }}" class="btn btn-primary">Coba Sekarang</a>
+    </div>
+    <div class="col-lg-7">
+      <img src="{{ url_for('static', filename='img/home.png') }}" alt="home" class="img-fluid">
+    </div>
+  </div>
+  
+  <div class="row justify-content-center" id="why-us">
+    <div class="col-md-12 text-center">    
+     <h3>Mengapa Harus Saran Tani?</h3>
+     <p class="sub-text">We did research what your needs and
+      here we are providing all of them just for you</p>
+    </div>
+    <div class="col-md-12">
+      <img src="{{ url_for('static', filename='img/tick.png') }}" alt="tick" class="img-fluid">
+      <h5>Rekomendasi Pemilihan Tanaman Terbaik</h5>
+      <p class="text-desc">Pertanian merupakan sektor penting dalam kehidupan manusia. karena hasil pertanian dibutuhkan untuk keberlangsungan
+        seluruh kehidupan semua orang. Pertanian di masa depan (precison agriculture) menitikberatkan pada pengoptimalan dan
+        efisiensi sumber daya yang ada untuk menghasilkan output yang semaksimal mungkin. Para petani diharapkan mampu 
+        memberikan kontribusi yang maksimal dengan pertanian yang dimiliki. Kontribusi tersebut berupa produktivitas hasil pertanian.
+        Salah satu cara agar produktivitas hasil pertanian maksimal adalah dengan memanfatkan lahan pertanian se-optimal mungkin
+        dengan menentukan tanaman yang sesuai dengan kondisi lahan yang dimiliki petani. Saran Tani hadir dengan membantu
+        Anda (para petani) untuk mentukan pemilihan tanaman terbaik sesuai lahan yang Anda miliki.</p>
+    </div>
+  </div>
+</div>
+
+<div id="tutorial">
+  <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+          <h3>Bagaimana Cara Menggunakan Saran Tani?</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="stepper-wrapper">
+                <div class="stepper-item active">
+                  <div class="step-counter">01</div>
+                </div>
+                <div class="stepper-item">
+                  <div class="step-counter">02</div>
+                </div>
+                <div class="stepper-item">
+                  <div class="step-counter">03</div>
+                </div>
+              </div>
+              <p class="mt-5">Klik fitur rekomendasi pada menu navigasi yang telah disediakan diatas</p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="team">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center">
+        <h3>Team Kami</h3>
+      </div>
+      <div class="col-md-12">
+        <div class="row text-center">
+          <div class="col-md-4">   
+            <img src="{{ url_for('static', filename='img/team1.png') }}" alt="team" class="img-fluid">
+            <h5 class="mt-3">Hipster</h5>
+            <p class="text-desc">Nur Muhammad Himawan</p>
+          </div>
+          <div class="col-md-4">   
+            <img src="{{ url_for('static', filename='img/team2.png') }}" alt="team" class="img-fluid">
+            <h5 class="mt-3">Hustler</h5>
+            <p class="text-desc">Aditya Hari Saputra</p>
+          </div>
+          <div class="col-md-4">   
+            <img src="{{ url_for('static', filename='img/team3.png') }}" alt="team" class="img-fluid">
+            <h5 class="mt-3">Hacker</h5>
+            <p class="text-desc">Varrel Dwitantio Purwadiansyah</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="benefits">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="{{ url_for('static', filename='img/benefit.png') }}" alt="benefit" class="img-fluid">
+      </div>
+      <div class="col-md-6 mt-5 info">
+        <h5>SAVE MORE TIME</h5>
+        <h3>And Boost Productivity</h3>
+        <p>Tunggu apalagi?
+          Segera temukan tanaman terbaik untuk pertanian Anda</p>
+        <a href="{{ url_for('rekomendasi') }}" class="btn btn-primary">Coba Sekarang</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'include/footer.html' %}
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(document).ready(function() {
+      $("#predict").click(function(e) {
+        e.preventDefault();
+
+        var N = parseFloat($("#N").val());
+        var P = parseFloat($("#P").val());
+        var K = parseFloat($("#K").val());
+        var Temperature = parseFloat($("#Temperature").val());
+        var Humidity = parseFloat($("#Humidity").val());
+        var PH = parseFloat($("#PH").val());
+        var Rainfall = parseFloat($("#Rainfall").val());
+
+        $.ajax("{{ url_for('predict') }}", {
+          data: JSON.stringify({
+            "N": N,
+            "P": P,
+            "K": K,
+            "temperature": Temperature,
+            "humidity": Humidity,
+            "ph": PH,
+            "rainfall": Rainfall
+          }),
+          type: "POST",
+          contentType: 'application/json',
+          success: function(data) {
+            window.location.href = "result?prediction=" + data.prediction;
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+      });
+
+      $(".step-counter").click(function(e) {
+        var index = $(this).text() - 1;
+        $(".stepper-item").removeClass("active");
+        $(".stepper-item").eq(index).addClass("active");
+        if (index == 0) {
+          $("#tutorial p").text('Klik fitur rekomendasi pada menu navigasi yang telah disediakan diatas')
+        } else if (index == 1) {
+          $("#tutorial p").text('Inputkan data-data yang dibutuhkan sesuai kondisi pada lahan pertanian yang Anda miliki                        seperti Nitrogen, Fosfor, Kalium, Suhu, Kelembapan, pH tanah dan Curah Hujan')
+        } else if (index == 2) {
+          $("#tutorial p").text('Sistem akan memberikan rekomendasi tanaman terbaik. Anda dapat melihat tanaman yang sesuai untuk ditanam dengan kondisi lahan pertanian yang Anda miliki.')
+        } 
+      });
+    });
+  </script>
+{% endblock %}

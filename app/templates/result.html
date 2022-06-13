@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% set active_page = "recommendation" %}
+
+{% block head %}
+  <title>Hasil Rekomendasi Tanaman Pangan</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {% include 'include/navbar.html' %}
+
+  <div class="row justify-content-center" id="recommendation">
+    <div class="col-md-12 text-center">
+      <h3>Fitur Rekomendasi Tanaman</h3>
+    </div>
+    <div class="col-md-8">
+      <div class="card mt-5 mb-5">
+        <div class="card-body">
+          <h5 class="text-center mb-4">Hasil Rekomendasi</h5>
+          <img id="image">
+          <p>Rekomendasi tanaman yang sesuai dengan kondisi lahan Anda adalah <span class="fw-bold" id="result"></span></p>
+          
+          <a href="{{ url_for('rekomendasi') }}" class="btn btn-primary mt-3">Kembali</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'include/footer.html' %}
+{% endblock %}
+ 
+{% block js %} 
+
+<script>
+  $(document).ready(function(){
+    var url = window.location.href;
+    var predict = url.split('?')[1];
+    var data = predict.split('=')[1];
+    
+    var label = {
+              'apel': 16,
+              'pisang': 11,
+              'kacang hitam': 8,
+              'kacang arab' : 3,
+              'kelapa': 19,
+              'kopi': 22,
+              'kapas': 20,
+              'anggur': 13,
+              'rami': 21,
+              'kacang merah': 4,
+              'kacang lentil': 9,
+              'jagung': 2,
+              'mangga': 12,
+              'kacang kupu kupu': 6,
+              'kacang hijau': 7,
+              'melon': 15,
+              'jeruk': 17,
+              'pepaya': 18,
+              'kacang gude': 5,
+              'delima': 10,
+              'padi': 1,
+              'semangka': 14
+            };  
+      
+    
+    for (var key in label) {
+      if (label[key] == data) {
+        $("#image").attr("src", "static/img/tanaman/"+data+".png");
+        $('#result').text(key);
+      }
+    }
+  });
+</script>
+{% endblock %}

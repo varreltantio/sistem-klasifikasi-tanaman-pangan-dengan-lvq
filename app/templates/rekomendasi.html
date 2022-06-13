@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% set active_page = "recommendation" %}
+
+{% block head %}
+  <title>Rekomendasi Tanaman Pangan</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {% include 'include/navbar.html' %}
+
+  <div class="row justify-content-center" id="recommendation">
+    <div class="col-md-12 text-center">
+      <h3>Fitur Rekomendasi Tanaman</h3>
+    </div>
+    <div class="col-md-8">
+      <div class="card mt-5 mb-5">
+        <div class="card-body">
+          <h5>Kondisi Lahan Anda</h5>
+          <p class="pb-3">Masukkan data yang dibutuhkan terkait lahan Anda pada form dibawah ini</p>
+          <form>
+            <div class="mb-4">
+              <label for="N" class="form-label">Nitrogen</label>
+              <input type="text" class="form-control" id="N" name="N">
+              <div id="NHelp" class="form-text">rasio kandungan Nitrogen (N) di dalam tanah</div>
+            </div>
+            <div class="mb-4">
+              <label for="P" class="form-label">Fosfor</label>
+              <input type="text" class="form-control" id="P" name="P">
+              <div id="PHelp" class="form-text">rasio kandungan Fosfor (P) di dalam tanah</div>
+            </div>
+            <div class="mb-4">
+              <label for="K" class="form-label">Kalium</label>
+              <input type="text" class="form-control" id="K" name="K">
+              <div id="KHelp" class="form-text">rasio kandungan Kalium (K) di dalam tanah</div>
+            </div>
+            <div class="mb-4">
+              <label for="Temperature" class="form-label">Suhu</label>
+              <input type="text" class="form-control" id="Temperature" name="Temperature">
+              <div id="TemperatureHelp" class="form-text">suhu dalam derajat Celcius</div>
+            </div>
+            <div class="mb-4">
+              <label for="Humidity" class="form-label">Kelembapan</label>
+              <input type="text" class="form-control" id="Humidity" name="Humidity">
+              <div id="HumidityHelp" class="form-text">kelembaban relatif dalam %</div>
+            </div>
+            <div class="mb-4">
+              <label for="PH" class="form-label">PH</label>
+              <input type="text" class="form-control" id="PH" name="PH">
+              <div id="PHHelp" class="form-text">nilai PH tanah</div>
+            </div>
+            <div class="mb-4">
+              <label for="Rainfall" class="form-label">Curah Hujan</label>
+              <input type="text" class="form-control" id="Rainfall" name="Rainfall">
+              <div id="KHelp" class="form-text">Tingkat curah hujan</div>
+            </div>
+            <a id="predict" class="btn btn-primary">Rekomendasi</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'include/footer.html' %}
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(document).ready(function() {
+      $("#predict").click(function(e) {
+        e.preventDefault();
+
+        var N = parseFloat($("#N").val());
+        var P = parseFloat($("#P").val());
+        var K = parseFloat($("#K").val());
+        var Temperature = parseFloat($("#Temperature").val());
+        var Humidity = parseFloat($("#Humidity").val());
+        var PH = parseFloat($("#PH").val());
+        var Rainfall = parseFloat($("#Rainfall").val());
+
+        $.ajax("{{ url_for('predict') }}", {
+          data: JSON.stringify({
+            "N": N,
+            "P": P,
+            "K": K,
+            "temperature": Temperature,
+            "humidity": Humidity,
+            "ph": PH,
+            "rainfall": Rainfall
+          }),
+          type: "POST",
+          contentType: 'application/json',
+          success: function(data) {
+            window.location.href = "result?prediction=" + data.prediction;
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
