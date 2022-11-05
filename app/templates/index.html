@@ -123,38 +123,6 @@
 {% block js %}
   <script>
     $(document).ready(function() {
-      $("#predict").click(function(e) {
-        e.preventDefault();
-
-        var N = parseFloat($("#N").val());
-        var P = parseFloat($("#P").val());
-        var K = parseFloat($("#K").val());
-        var Temperature = parseFloat($("#Temperature").val());
-        var Humidity = parseFloat($("#Humidity").val());
-        var PH = parseFloat($("#PH").val());
-        var Rainfall = parseFloat($("#Rainfall").val());
-
-        $.ajax("{{ url_for('predict') }}", {
-          data: JSON.stringify({
-            "N": N,
-            "P": P,
-            "K": K,
-            "temperature": Temperature,
-            "humidity": Humidity,
-            "ph": PH,
-            "rainfall": Rainfall
-          }),
-          type: "POST",
-          contentType: 'application/json',
-          success: function(data) {
-            window.location.href = "result?prediction=" + data.prediction;
-          },
-          error: function(data) {
-            console.log(data);
-          }
-        });
-      });
-
       $(".step-counter").click(function(e) {
         var index = $(this).text() - 1;
         $(".stepper-item").removeClass("active");
