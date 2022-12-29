@@ -90,6 +90,3 @@ class model(object):
                 min_index = i
 
         return self.label[min_index]
-     
-      
-  

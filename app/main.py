@@ -36,7 +36,7 @@ def predict():
         return jsonify({'prediction': str(prediction)})
     except ValueError:
         return jsonify({'error': ValueError})
-   
+
 @app.route('/team')
 def team():
     return render_template('team.html')
